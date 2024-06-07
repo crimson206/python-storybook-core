@@ -4,7 +4,7 @@
         "context": "..",
         "dockerfile": "Dockerfile"
     },
-    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y git-flow",
+    "postCreateCommand": "bash ./setup.sh",
     "customizations": {
         "vscode": {
         "extensions": [
