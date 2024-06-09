@@ -1,8 +1,7 @@
 import os
 from typing import List, Any, Optional, Callable, Dict
-from python_storybook.core import (
-    Story, 
-)
+from .utils import get_source_safe, get_docs, get_type_hints
+from python_storybook.core import Story
 
 
 class StoryManager:
@@ -26,6 +25,10 @@ class StoryManager:
             meta=meta,
             func=func,
             parent=self.title,
+            full_path=f"{self.title}/{story_name}",
+            docs=get_docs(func),
+            source=get_source_safe(func),
+            typehints=get_type_hints(func),
             kwargs=kwargs,
         )
         self.stories[story_name] = story
@@ -39,7 +42,7 @@ class StoryManager:
         return list(self.stories.keys())
 
     def get_story_full_paths(self) -> List[str]:
-        return [self.title + "/" + story_name for story_name in self.stories.keys()]
+        return [story.full_path for story in self.stories.values()]
 
     def get_stories(self):
         return list(self.stories.values())
