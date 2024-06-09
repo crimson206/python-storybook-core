@@ -1,9 +1,9 @@
-from typing import List, Dict
+from typing import List
 from python_storybook.core import StoryManager, Story
 
 
 class StoryHub:
-    _all_managers: Dict[str, StoryManager] = {}
+    _all_managers = {}
 
     @staticmethod
     def register(story_manager: StoryManager) -> None:
