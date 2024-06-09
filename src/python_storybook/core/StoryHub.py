@@ -1,11 +1,5 @@
-from typing import List, Dict, Union
-from .utils import get_docs, get_type_hints
-from python_storybook.core import (
-    StoryManager, 
-    Story, 
-    StoryHub,
-    StoryMeta
-)
+from typing import List, Dict
+from python_storybook.core import StoryManager, Story
 
 
 class StoryHub:
@@ -42,24 +36,6 @@ class StoryHub:
         story_manager = StoryHub.get_manager(title)
         story = story_manager.get_story(story_name=story_name)
         return story
-
-    @staticmethod
-    def get_story_meta(story_or_path: Union[Story, str]) -> StoryMeta:
-        if isinstance(story_or_path, Story):
-            story = story_or_path
-        elif isinstance(story_or_path, str):
-            story = StoryHub.get_story(full_path=story_or_path)
-        else:
-            raise "invalid input."
-
-        story_meta = StoryMeta(
-            title=story.parent,
-            name=story.name,
-            func_name=story.func.__name__,
-            docs=get_docs(story.func),
-            type_hints=get_type_hints(story.func),
-        )
-        return story_meta
 
     @staticmethod
     def reset():
