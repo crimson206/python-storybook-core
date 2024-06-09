@@ -1,2 +1,2 @@
 pydantic
-python-storybook-core=0.1.1
+python-storybook-core==0.1.1
