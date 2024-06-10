@@ -2,7 +2,6 @@ import os
 from typing import List
 from python_storybook.core import StoryManager, Story
 import importlib.util
-from pathlib import Path
 
 
 class StoryHub:
@@ -61,7 +60,7 @@ class StoryHub:
     @staticmethod
     def register_story_managers(directory=None):
         if directory is None:
-            directory = Path(__file__).parent
+            directory = os.getcwd()
 
         for root, dirs, files in os.walk(directory):
             for file in files:
