@@ -1,6 +1,7 @@
 import unittest
 import io
-import sys
+import sys 
+from pathlib import Path
 
 from python_storybook.core import (
     StoryHub,
@@ -80,6 +81,22 @@ class TestStoryManagerBasic(unittest.TestCase):
         story = StoryHub.get_story(full_path="Example/print")
 
         self.assertEqual(story, created_story)
+
+    # Currently, we don't test the type of the maganers with registering.
+    # It is also not ideal to track all the example _stories.py
+    # If this package remains small, it might be okay.
+    # Otherwise, a refactoring is required.
+    def test_register_story_managers(self):
+        base_dir = Path(__file__).parent
+        StoryHub.register_story_managers(directory=base_dir)
+        expected_managers_count = 2
+
+        # Two stories dir
+        # - /context/example_stories.py
+        # - /context/level2/deeper_stories.py
+        registred_managers = len(StoryHub._all_managers.values())
+
+        self.assertEqual(expected_managers_count, registred_managers)
 
 
 if __name__ == "__main__":
