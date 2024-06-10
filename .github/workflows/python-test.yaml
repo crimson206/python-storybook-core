@@ -1,7 +1,6 @@
 name: Python application test
 
 on:
-  push:
   pull_request:
     branches: [ main, develop, 'release/*', 'feature/*' ]
 
