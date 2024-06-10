@@ -1,5 +1,8 @@
+import os
 from typing import List
 from python_storybook.core import StoryManager, Story
+import importlib.util
+from pathlib import Path
 
 
 class StoryHub:
@@ -40,3 +43,28 @@ class StoryHub:
     @staticmethod
     def reset():
         StoryHub._all_managers.clear()
+
+    @staticmethod
+    def import_and_register(path):
+        # Create a module name based on file path
+        module_name = os.path.splitext(os.path.basename(path))[0]
+        spec = importlib.util.spec_from_file_location(module_name, path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        if hasattr(module, 'story_manager'):
+            # Assuming StoryHub has a method 'register' that can register a story manager
+            StoryHub.register(story_manager=module.story_manager)
+        else:
+            print(f"No 'story_manager' found in {path}")
+
+    @staticmethod
+    def register_story_managers(directory=None):
+        if directory is None:
+            directory = Path(__file__).parent
+
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                if file.endswith('_stories.py'):
+                    file_path = os.path.join(root, file)
+                    StoryHub.import_and_register(file_path)

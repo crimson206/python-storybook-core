@@ -23,7 +23,6 @@ class StoryManager:
         story = Story(
             name=story_name,
             meta=meta,
-            func=func,
             parent=self.title,
             full_path=f"{self.title}/{story_name}",
             docs=get_docs(func),

@@ -1,10 +1,9 @@
 from pydantic import BaseModel
-from typing import Any, Optional, Callable, Dict
+from typing import Any, Optional, Dict
 
 
 class Story(BaseModel):
     name: str
-    func: Callable[[Any], Any]
     meta: Optional[Dict[str, Any]]
     parent: str
     full_path: str
